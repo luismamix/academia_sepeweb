@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Estudiante;
 use App\Form\EstudianteType;
 use App\Repository\EstudianteRepository;
+use App\Repository\NotaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,40 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/estudiante")
  */
 class EstudianteController extends AbstractController
-{
+{   
+    /**
+     * @Route("/listado_estudiantes", name="listado_estudiantes", methods={"GET"})
+     */
+    public function listado_estudiantes(EstudianteRepository $estudianteRepository,  NotaRepository $nr): Response
+    {
+        
+        return $this->render('estudiante/listado_estudiantes.html.twig', [
+            'estudiantes' => $estudianteRepository->findAll(),
+            'notas' => $nr->findAll()
+        ]);
+    }
+
+     /**
+     * @Route("/mostrar_estudiante/{id}", name="mostrar_estudiante", requirements={"id"="\d+"}, methods={"GET"})
+     */
+    public function mostrar_estudiante($id, EstudianteRepository $er, NotaRepository $notaRepository): Response
+    {   
+        $estudiante = $er->find($id);
+        $notas = $notaRepository->findBy(
+            ['estudiante' => $estudiante], 
+        );
+        
+           //comprobar si existe el inmueble
+           if(!$estudiante){
+            throw $this->createNotFoundException('Este Estudiante no existe'); 
+        }
+
+        return $this->render('estudiante/mostrar_estudiante.html.twig', [
+            'estudiante' => $estudiante,
+            'notas' => $notas
+        ]);
+    }
+
     /**
      * @Route("/", name="estudiante_index", methods={"GET"})
      */

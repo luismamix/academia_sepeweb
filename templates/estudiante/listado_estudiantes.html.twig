@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de estudiantes{% endblock %}
+
+{% block body %}
+<div class="row mt-2">
+    <div class="col ">
+        <h1>Listado de Estudiantes
+    <span><i style="font-size:38px;" class="far fa-clipboard text-dark ml-1"></i></span></h1>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 ">
+        
+        <table class="table table-striped">
+        <thead>
+            <tr>
+            <th scope="col"> <span class="text-purple">   Id </span></th>
+            <th scope="col"> <span class="text-purple" >   Nombre</span></th>
+            <th scope="col"> <span class="text-purple" >   Apellido1 </span></th>
+            <th scope="col"> <span class="text-purple" >   Apellido2 </span></th>
+            <th scope="col"> <span class="text-purple" >   Numero de cursos </span></th>
+            <th scope="col"> <span class="text-purple" >   Nota media   </span></th>
+            <th scope="col"> <span class="text-purple" >   Acciones  </span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for estudiante in estudiantes %}
+            <tr>
+            <th scope="row">{{estudiante.id}}</th>
+            <td>{{estudiante.nombre}}</td>
+            <td>{{estudiante.apellido1}}</td>
+            <td>{{estudiante.apellido2}}</td>
+            <td>
+                 {% set cursos = 0 %}
+                 {% set nmedia = 0 %}
+                 {% set x = 0 %}
+                 {% for nota in notas %}
+                    {% if estudiante.id == nota.estudiante.id %}
+                        {% set cursos = cursos + 1 %}
+                        {% set x =  x + nota.nota %}
+                    {% endif %}
+                 {% endfor %}
+                 {% set nmedia = x /cursos %}
+                 {{cursos}}
+            </td>
+            <td>{{nmedia}}</td>
+            <td><a class="text-purple font-italic" href="{{ path('mostrar_estudiante', {'id': estudiante.id}) }}"> Ver Notas </a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-2"></div>
+</div>
+{% endblock %}

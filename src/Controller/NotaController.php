@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class NotaController extends AbstractController
 {
+
     /**
      * @Route("/", name="nota_index", methods={"GET"})
      */

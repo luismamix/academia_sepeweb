@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Estudiante{% endblock %}
+
+{% block body %}
+<div class="row mt-2">
+    <div class="col ">
+        <h1> Estudiante {{estudiante.nombre}}</h1>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 ">
+        
+        <table class="table table-striped">
+        <thead>
+            <tr>
+            <th scope="col"> <span class="text-purple">   Curso</span></th>
+            <th scope="col"> <span class="text-purple" >   Duracion </span></th>
+            <th scope="col"> <span class="text-purple" >   Nota </span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for nota in notas %}
+            <tr>
+            <td>{{nota.curso.nombre}}</td>
+            <td>{{nota.curso.duracion}}</td>
+            <td>{{nota.nota}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-10">
+    <p><a class="text-purple font-italic" href="{{ path('listado_estudiantes') }}"> Volver al listado de alumnos </a></p>
+  </div>
+
+</div>
+{% endblock %}
