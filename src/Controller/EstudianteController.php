@@ -41,7 +41,7 @@ class EstudianteController extends AbstractController
            //comprobar si existe el inmueble
            if(!$estudiante){
             throw $this->createNotFoundException('Este Estudiante no existe'); 
-        }
+            }
 
         return $this->render('estudiante/mostrar_estudiante.html.twig', [
             'estudiante' => $estudiante,
